@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, Sequelize } = require('sequelize');
 const { CATEGORY_TABLE } = require('./categoryModel');
 
 const SERVICE_TABLE = 'services';
@@ -13,7 +13,7 @@ const ServiceSchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
+    field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
   name: {
@@ -54,8 +54,8 @@ const ServiceSchema = {
 };
 
 class Service extends Model {
-  static associate() {
-    // associate
+  static associate(models) {
+    this.belongsTo(models.Category, { as: 'category' });
   }
 
   static config(sequelize) {

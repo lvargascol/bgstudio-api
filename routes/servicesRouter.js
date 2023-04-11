@@ -10,34 +10,13 @@ const {
 const router = express.Router();
 const service = new ServicesService();
 
-//Logica temporal
-
-// router.get('/', (req, res) => {
-//   res.status(200).json({ 'ruta de prueba': 'services' });
-// });
-
-// router.post('/', (req, res) => {
-//   const body = req.body;
-//   res.status(200).json({ 'message': 'created' , 'data': body })
-
-// });
-
-// router.patch('/:id', (req, res) => {
-//   const { id } = req.params;
-//   const body = req.body;
-//   res.status(200).json({ message: 'updated', data: body , id: id });
-// });
-
-// router.delete('/:id', (req, res) => {
-//   const { id } = req.params;
-//   res.status(200).json({ message: 'deleted', id: id });
-// });
-
-//Logica "definitiva"
-
-router.get('/', async (req, res) => {
-  const services = await service.find();
-  res.status(200).json(services);
+router.get('/', async (req, res, next) => {
+  try {
+    const services = await service.find();
+    res.status(200).json(services);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get(
@@ -68,7 +47,6 @@ router.post(
   }
 );
 
-
 router.patch(
   '/:id',
   validatorHandler(findOneServiceSchema, 'params'),
@@ -77,8 +55,8 @@ router.patch(
     try {
       const { id } = req.params;
       const body = req.body;
-      const newService = await service.update(id, body);
-      res.json(newService);
+      const updatedService = await service.update(id, body);
+      res.json(updatedService);
     } catch (error) {
       next(error);
     }
@@ -91,11 +69,13 @@ router.delete(
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      res.json({id});
+      const deletedService = await service.delete(id);
+      res.json(deletedService);
     } catch (error) {
       next(error);
     }
   }
 );
+
 
 module.exports = router;

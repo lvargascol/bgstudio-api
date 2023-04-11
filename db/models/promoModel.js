@@ -1,8 +1,8 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, Sequelize } = require('sequelize');
 
 const PROMO_TABLE = 'promos';
 
-const promoSchema = {
+const PromoSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -12,7 +12,7 @@ const promoSchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
+    field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
   name: {
@@ -56,4 +56,4 @@ class Promo extends Model {
   }
 }
 
-module.exports = { PROMO_TABLE, promoSchema, Promo };
+module.exports = { PROMO_TABLE, PromoSchema, Promo };

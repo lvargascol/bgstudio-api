@@ -12,7 +12,7 @@ const UserSchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
+    field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
   email: {
@@ -27,16 +27,23 @@ const UserSchema = {
   role: {
     allowNull: false,
     type: DataTypes.STRING,
-    defaultValue: 'customer',
   },
 };
 
 class User extends Model {
   static associate(models) {
-    // this.hasOne(models.Customer, {
-    //   as: 'customer',
-    //   foreignKey: 'userId'
-    // })
+    this.hasOne(models.Customer, {
+      as: 'customer',
+      foreignKey: 'userId'
+    });
+    this.hasOne(models.Specialist, {
+      as: 'specialist',
+      foreignKey: 'userId'
+    });
+    this.hasMany(models.Order, {
+      as: 'orders',
+      foreignKey: 'userId',
+    });
   }
 
   static config(sequelize) {

@@ -1,9 +1,9 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, Sequelize } = require('sequelize');
 const { ORDER_TABLE } = require('./orderModel');
 
 const PAYMENT_TABLE = 'payments';
 
-const paymentSchema = {
+const PaymentSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -13,7 +13,7 @@ const paymentSchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
+    field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
   amount: {
@@ -27,7 +27,7 @@ const paymentSchema = {
   },
   orderId: {
     field: 'order_id',
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.INTEGER,
     reference: {
       model: ORDER_TABLE,
@@ -39,8 +39,8 @@ const paymentSchema = {
 };
 
 class Payment extends Model {
-  static associate() {
-    // associate
+  static associate(models) {
+    this.belongsTo(models.Order, { as: 'orders' });
   }
 
   static config(sequelize) {
@@ -53,4 +53,4 @@ class Payment extends Model {
   }
 }
 
-module.exports = { PAYMENT_TABLE, paymentSchema, Payment };
+module.exports = { PAYMENT_TABLE, PaymentSchema, Payment };

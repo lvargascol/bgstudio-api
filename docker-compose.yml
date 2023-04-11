@@ -24,7 +24,7 @@ services:
     image: mysql:5
     environment:
       - MYSQL_DATABASE=bgstudio-db
-      - MYSQL_USER=
+      - MYSQL_USER=leo
       - MYSQL_ROOT_PASSWORD=admin123
       - MYSQL_PORT=3306
     ports:

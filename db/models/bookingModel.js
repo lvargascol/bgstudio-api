@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, Sequelize } = require('sequelize');
 const { CUSTOMER_TABLE } = require('./customerModel');
 const { SPECIALIST_TABLE } = require('./specialistModel');
 const { ORDER_TABLE } = require('./orderModel');
@@ -15,7 +15,7 @@ const BookingSchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
+    field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
   date: {
@@ -77,8 +77,10 @@ const BookingSchema = {
 };
 
 class Booking extends Model {
-  static associate() {
-    // associate
+  static associate(models) {
+    this.belongsTo(models.Customer, { as: 'customer' });
+    this.belongsTo(models.Specialist, { as: 'specialist' });
+    this.belongsTo(models.Order, { as: 'order' });
   }
 
   static config(sequelize) {
@@ -91,4 +93,4 @@ class Booking extends Model {
   }
 }
 
-module.exports = { BOOKING_TABLE, BookingSchema, Service };
+module.exports = { BOOKING_TABLE, BookingSchema, Booking };

@@ -13,7 +13,7 @@ const SpecialistSchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
+    field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
   firstName: {
@@ -34,6 +34,15 @@ const SpecialistSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  startedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'started_at',
+  },
+  birthday: {
+    allowNull: false,
+    type: DataTypes.DATE,
+  },
   userId: {
     field: 'user_id',
     allowNull: true,
@@ -50,11 +59,11 @@ const SpecialistSchema = {
 
 class Specialist extends Model {
   static associate(models) {
-    // this.belongsTo(models.User, { as: 'user' });
-    // this.hasMany(models.Booking, {
-    //   as: 'bookings',
-    //   foreignKey: 'specialistId',
-    // });
+    this.belongsTo(models.User, { as: 'user' });
+    this.hasMany(models.Booking, {
+      as: 'bookings',
+      foreignKey: 'specialistId',
+    });
   }
 
   static config(sequelize) {

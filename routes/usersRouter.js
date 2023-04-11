@@ -10,14 +10,10 @@ const {
 const router = express.Router();
 const service = new UsersService();
 
-// router.get('/', (req, res) => {
-//   res.status(200).json({ 'ruta de prueba': 'users' });
-// });
-
 router.get('/', async (req, res, next) => {
   try {
     const users = await service.find();
-    res.json(users);
+    res.status(200).json(users);
   } catch (error) {
     next(error);
   }
@@ -30,7 +26,7 @@ router.get(
     try {
       const { id } = req.params;
       const user = await service.findOne(id);
-      res.json(user);
+      res.status(200).json(user);
     } catch (error) {
       next(error);
     }
@@ -51,16 +47,6 @@ router.post(
     }
   }
 );
-
-router.put('/:id', (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
-  res.json({
-    message: 'updated',
-    data: body,
-    id,
-  });
-});
 
 router.patch(
   '/:id',

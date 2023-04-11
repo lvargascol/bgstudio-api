@@ -14,13 +14,13 @@ const OrderSchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
+    field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
   paid: {
-    allowNull: false,
+    // allowNull: false,
     type: DataTypes.BOOLEAN,
-    default: false,
+    defaultValue: false,
   },
   // total: {
   //   type: DataTypes.VIRTUAL,
@@ -57,13 +57,21 @@ const OrderSchema = {
 
 class Order extends Model {
   static associate(models) {
-    // this.belongsTo(models.User, { as: 'user' });
-    // this.belongsToMany(models.Product, {
-    //   as: 'items',
-    //   through: models.OrderProduct,
-    //   foreignKey: 'orderId',
-    //   otherKey: 'productId',
-    // });
+    this.belongsTo(models.User, { as: 'user' });
+    this.hasMany(models.Booking, {
+      as: 'bookings',
+      foreignKey: 'orderId',
+    });
+    this.hasMany(models.Payment, {
+      as: 'payments',
+      foreignKey: 'orderId',
+    });
+    this.belongsToMany(models.Product, {
+      as: 'items',
+      through: models.OrderProduct,
+      foreignKey: 'orderId',
+      otherKey: 'productId',
+    });
   }
 
   static config(sequelize) {

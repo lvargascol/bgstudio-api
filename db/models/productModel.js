@@ -13,7 +13,7 @@ const ProductSchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
+    field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
   name: {
@@ -21,6 +21,10 @@ const ProductSchema = {
     type: DataTypes.STRING,
   },
   price: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
+  amount: {
     allowNull: false,
     type: DataTypes.INTEGER,
   },
@@ -47,7 +51,7 @@ const ProductSchema = {
 
 class Product extends Model {
   static associate(models) {
-    // this.belongsTo(models.Category, { as: 'category' });
+    this.belongsTo(models.Category, { as: 'category' });
   }
 
   static config(sequelize) {

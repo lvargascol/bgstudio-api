@@ -3,7 +3,7 @@ const { config } = require('../config/config');
 const { setupModels } = require('../db/models/index');
 
 const options = {
-  dialect: 'postgres',
+  dialect: 'postgres',   //ALternate if you want to use other DB
   // dialect: 'mysql',
   logging: config.isProd ? false : console.log,
 };
@@ -20,6 +20,5 @@ const sequelize = new Sequelize(config.dbUrl, options);
 
 setupModels(sequelize);
 
-sequelize.sync();
 
 module.exports = sequelize;

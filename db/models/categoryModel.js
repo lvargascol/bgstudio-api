@@ -12,7 +12,7 @@ const CategorySchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'create_at',
+    field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
   name: {
@@ -28,10 +28,14 @@ const CategorySchema = {
 
 class Category extends Model {
   static associate(models) {
-    // this.hasMany(models.Product, {
-    //   as: 'products',
-    //   foreignKey: 'categoryId',
-    // });
+    this.hasMany(models.Product, {
+      as: 'products',
+      foreignKey: 'categoryId',
+    });
+    this.hasMany(models.Service, {
+      as: 'services',
+      foreignKey: 'categoryId',
+    });
   }
 
   static config(sequelize) {
