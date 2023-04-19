@@ -36,6 +36,11 @@ const ProductSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  active: {
+    allowNull: false,
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
   categoryId: {
     field: 'category_id',
     allowNull: false,

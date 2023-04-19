@@ -40,6 +40,11 @@ const ServiceSchema = {
     type: DataTypes.TEXT,
     defaultValue: '',
   },
+  active: {
+    allowNull: false,
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
   categoryId: {
     field: 'category_id',
     allowNull: false,

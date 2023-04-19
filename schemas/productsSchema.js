@@ -6,6 +6,7 @@ const price = Joi.number().integer().min(500);
 const amount = Joi.number().integer().min(0);
 const description = Joi.string();
 const image = Joi.string().uri();
+const active = Joi.boolean();
 const categoryId = Joi.number().integer();
 
 // const limit = Joi.number().integer();
@@ -29,6 +30,7 @@ const updateProductSchema = Joi.object({
   amount: amount,
   description: description,
   image: image,
+  active: active,
   categoryId: categoryId,
 });
 

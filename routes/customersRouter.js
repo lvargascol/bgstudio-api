@@ -3,6 +3,7 @@ const CustomersService = require('../services/customersServices');
 const { validatorHandler } = require('../middlewares/validatorHandler');
 const {
   createCustomerSchema,
+  createGuestCustomerSchema,
   updateCustomerSchema,
   findOneCustomerSchema,
 } = require('../schemas/customersSchema');
@@ -36,6 +37,20 @@ router.get(
 router.post(
   '/',
   validatorHandler(createCustomerSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const newCustomer = await service.create(body);
+      res.json(newCustomer);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  '/guest',
+  validatorHandler(createGuestCustomerSchema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;

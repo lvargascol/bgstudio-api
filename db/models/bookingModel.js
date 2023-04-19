@@ -34,12 +34,17 @@ const BookingSchema = {
     allowNull: false,
     type: DataTypes.BOOLEAN,
     field: 'deposit_check',
-    default: false,
+    defaultValue: false,
   },
   done: {
     allowNull: false,
     type: DataTypes.BOOLEAN,
-    default: false,
+    defaultValue: false,
+  },
+  notes: {
+    allowNull: false,
+    type: DataTypes.TEXT,
+    defaultValue: '',
   },
   customerId: {
     field: 'customer_id',

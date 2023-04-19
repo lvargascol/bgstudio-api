@@ -29,6 +29,7 @@ const CustomerSchema = {
   phone: {
     allowNull: true,
     type: DataTypes.STRING,
+    unique: true,
   },
   userId: {
     field: 'user_id',

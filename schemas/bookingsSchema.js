@@ -6,6 +6,7 @@ const cost = Joi.number().integer();
 const minutes = Joi.number().integer();
 const depositCheck = Joi.boolean();
 const done = Joi.boolean();
+const notes = Joi.string();
 const customerId = Joi.number().integer();
 const specialistId = Joi.number().integer();
 const orderId = Joi.number().integer();
@@ -43,6 +44,7 @@ const updateBookingSchema = Joi.object({
   date: date, //*
   depositCheck: depositCheck,
   done: done,
+  notes: notes,
   specialistId: specialistId, //*
 });
 

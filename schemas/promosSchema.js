@@ -5,6 +5,7 @@ const name = Joi.string().min(3).max(45);
 const price = Joi.number().integer().min(1000);
 const minutes = Joi.number().integer().min(5).max(300);
 const image = Joi.string().uri();
+const active = Joi.boolean();
 const description = Joi.string();
 
 const createPromoSchema = Joi.object({
@@ -21,6 +22,7 @@ const updatePromoSchema = Joi.object({
   minutes: minutes,
   image: image,
   description: description,
+  active: active,
 });
 
 const findOnePromoSchema = Joi.object({

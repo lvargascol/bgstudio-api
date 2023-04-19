@@ -6,6 +6,7 @@ const price = Joi.number().integer().min(1000);
 const minutes = Joi.number().integer().min(5).max(300);
 const image = Joi.string().uri();
 const description = Joi.string();
+const active = Joi.boolean();
 const categoryId = Joi.number().integer();
 
 const createServiceSchema = Joi.object({
@@ -23,6 +24,7 @@ const updateServiceSchema = Joi.object({
   minutes: minutes,
   image: image,
   description: description,
+  active: active,
   categoryId: categoryId,
 });
 

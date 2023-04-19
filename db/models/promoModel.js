@@ -39,6 +39,11 @@ const PromoSchema = {
     type: DataTypes.TEXT,
     defaultValue: '',
   },
+  active: {
+    allowNull: false,
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
 };
 
 class Promo extends Model {

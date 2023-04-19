@@ -7,6 +7,7 @@ const phone = Joi.string().min(9);
 const position = Joi.string();
 const startedAt = Joi.date();
 const birthday = Joi.date();
+const active = Joi.boolean();
 const userId = Joi.number().integer();
 const email = Joi.string().email();
 const password = Joi.string().min(8);
@@ -31,6 +32,9 @@ const updateSpecialistSchema = Joi.object({
   lastName: lastName,
   phone: phone,
   position: position,
+  startedAt: startedAt,
+  birthday: birthday,
+  active: active,
   userId: userId,
 });
 

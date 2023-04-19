@@ -43,6 +43,11 @@ const SpecialistSchema = {
     allowNull: false,
     type: DataTypes.DATE,
   },
+  active: {
+    allowNull: false,
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
   userId: {
     field: 'user_id',
     allowNull: true,

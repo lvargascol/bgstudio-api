@@ -2,6 +2,7 @@ const Joi = require('joi');
 
 const id = Joi.number().integer();
 const paid = Joi.boolean();
+const notes = Joi.string();
 const userId = Joi.number().integer();
 
 const orderId = Joi.number().integer();
@@ -21,6 +22,7 @@ const addItemSchema = Joi.object({
 
 const updateOrderSchema = Joi.object({
   paid: paid,
+  notes: notes,
 });
 
 const findOneOrderSchema = Joi.object({

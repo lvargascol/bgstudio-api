@@ -21,6 +21,12 @@ const createCustomerSchema = Joi.object({
   }),
 });
 
+const createGuestCustomerSchema = Joi.object({
+  firstName: firstName.required(),
+  lastName: lastName.required(),
+  phone: phone.required(),
+});
+
 const updateCustomerSchema = Joi.object({
   firstName: firstName,
   lastName: lastName,
@@ -34,6 +40,7 @@ const findOneCustomerSchema = Joi.object({
 
 module.exports = {
   createCustomerSchema,
+  createGuestCustomerSchema,
   updateCustomerSchema,
   findOneCustomerSchema,
 };

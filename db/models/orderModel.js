@@ -22,6 +22,11 @@ const OrderSchema = {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  notes: {
+    allowNull: false,
+    type: DataTypes.TEXT,
+    defaultValue: '',
+  },
   // total: {
   //   type: DataTypes.VIRTUAL,
   //   get() {
