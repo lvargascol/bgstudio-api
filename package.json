@@ -7,10 +7,10 @@
     "dev": "nodemon index.js",
     "start": "node index.js",
     "lint": "eslint",
-    "migration:generate":"sequelize-cli migration:generate --name",
-    "migration:run":"sequelize-cli db:migrate",
-    "migration:revert":"sequelize-cli db:migrate:undo",
-    "migration:delete":"sequelize-cli db:migrate:undo:all"
+    "migration:generate": "sequelize-cli migration:generate --name",
+    "migration:run": "sequelize-cli db:migrate",
+    "migration:revert": "sequelize-cli db:migrate:undo",
+    "migration:delete": "sequelize-cli db:migrate:undo:all"
   },
   "keywords": [],
   "author": "",
