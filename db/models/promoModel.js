@@ -47,8 +47,13 @@ const PromoSchema = {
 };
 
 class Promo extends Model {
-  static associate() {
-    // associate
+  static associate(models) {
+    this.belongsToMany(models.Service, {
+      as: 'services',
+      through: models.PromoService,
+      foreignKey: 'promoId',
+      otherKey: 'serviceId',
+    });
   }
 
   static config(sequelize) {

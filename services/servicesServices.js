@@ -17,7 +17,9 @@ class ServicesService {
   }
 
   async findOne(id) {
-    const response = await models.Service.findByPk(id);
+    const response = await models.Service.findByPk(id, {      
+      include: ['category'],
+    });
     if (!response) {
       throw boom.notFound('Service not found');
     }

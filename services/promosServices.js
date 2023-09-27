@@ -15,12 +15,20 @@ class PromosService {
   }
 
   async findOne(id) {
-    const response = await models.Promo.findByPk(id);
+    const response = await models.Promo.findByPk(id, {      
+      include: ['services'],
+    });
     if (!response) {
       throw boom.notFound('Promo not found');
     }
     return response;
   }
+
+  async addService(data) {
+    const response = await models.PromoService.create(data);
+    return response;
+  }
+  
 
   async update(id, changes) {
     const response = await this.findOne(id);

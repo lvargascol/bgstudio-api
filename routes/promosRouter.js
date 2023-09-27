@@ -5,6 +5,7 @@ const {
   createPromoSchema,
   updatePromoSchema,
   findOnePromoSchema,
+  addServiceToPromo,
 } = require('../schemas/promosSchema');
 
 const router = express.Router();
@@ -41,6 +42,21 @@ router.post(
       const body = req.body;
       const newPromo = await service.create(body);
       res.json(newPromo);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+);
+
+router.post(
+  '/add-service/',
+  validatorHandler(addServiceToPromo, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const addService = await service.addService(body);
+      res.json(addService);
     } catch (error) {
       console.error(error);
       next(error);

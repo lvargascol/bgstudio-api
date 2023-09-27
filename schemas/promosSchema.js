@@ -12,9 +12,14 @@ const createPromoSchema = Joi.object({
   name: name.required(),
   price: price.required(),
   minutes: minutes.required(),
-  image: image.required(),
   description: description.required(),
 });
+
+const addServiceToPromo = Joi.object({
+  promoId: id.required(),
+  serviceId: id.required(),
+});
+
 
 const updatePromoSchema = Joi.object({
   name: name,
@@ -33,4 +38,5 @@ module.exports = {
   createPromoSchema,
   updatePromoSchema,
   findOnePromoSchema,
+  addServiceToPromo,
 };
