@@ -8,7 +8,7 @@ function validationErrorHandler(err, req, res, next) {
   if (err instanceof ValidationError) {
     res.status(409).json({
       message: err.message,
-      stack: err.errors,
+      stack: err.errors.map((error) => error.message),
     });
   }
   next(err);

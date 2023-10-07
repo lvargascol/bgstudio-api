@@ -32,8 +32,8 @@ const ServiceSchema = {
   image: {
     allowNull: false,
     type: DataTypes.STRING,
-    unique: true,
-    defaultValue: 'bit.ly/3nixwpw',
+    unique: false,
+    defaultValue: 'bit.ly/3nixwpi',
   },
   description: {
     allowNull: false,

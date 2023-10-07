@@ -31,7 +31,7 @@ const PromoSchema = {
   image: {
     allowNull: false,
     type: DataTypes.STRING,
-    unique: true,
+    unique: false,
     defaultValue: 'bit.ly/3nixwpw',
   },
   description: {

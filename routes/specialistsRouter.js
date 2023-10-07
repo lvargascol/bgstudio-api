@@ -5,6 +5,7 @@ const {
   createSpecialistSchema,
   updateSpecialistSchema,
   findOneCSpecialistSchema,
+  addServiceToSpecialist,
 } = require('../schemas/specialistsSchema');
 
 const router = express.Router();
@@ -47,6 +48,21 @@ router.post(
   }
 );
 
+router.post(
+  '/add-service/',
+  validatorHandler(addServiceToSpecialist, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const addService = await service.addService(body);
+      res.json(addService);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+);
+
 router.patch(
   '/:id',
   validatorHandler(findOneCSpecialistSchema, 'params'),
@@ -71,6 +87,20 @@ router.delete(
       const { id } = req.params;
       const deleted = await service.delete(id);
       res.json(deleted);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  '/remove-service/:id',
+  validatorHandler(findOneCSpecialistSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const removed = await service.removeService(id);
+      res.json(removed);
     } catch (error) {
       next(error);
     }

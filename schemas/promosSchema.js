@@ -13,6 +13,7 @@ const createPromoSchema = Joi.object({
   price: price.required(),
   minutes: minutes.required(),
   description: description.required(),
+  image: image,  
 });
 
 const addServiceToPromo = Joi.object({

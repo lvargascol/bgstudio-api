@@ -10,7 +10,7 @@ class PromosService {
   }
 
   async find() {
-    const response = await models.Promo.findAll({});
+    const response = await models.Promo.findAll({include: ['services'],});
     return response;
   }
 
@@ -48,6 +48,20 @@ class PromosService {
       id: id,
     };
   }
+
+
+  async removeService(id) {
+    const response = await models.PromoService.findByPk(id);
+    if (!response) {
+      throw boom.notFound('Service not found');
+    }
+    await response.destroy();
+    return {
+      message: 'Service successfully removed',
+      id: id,
+    };
+  }  
+
 }
 
 module.exports = PromosService;

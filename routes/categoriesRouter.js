@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const CategoriesService = require('../services/categoriesServices');
 const { validatorHandler } = require('../middlewares/validatorHandler');
 const {
@@ -6,21 +7,25 @@ const {
   updateCategorySchema,
   findOneCategorySchema,
 } = require('../schemas/categoriesSchema');
+const { checkRoles } = require('../middlewares/authHandler');
 
 const router = express.Router();
 const service = new CategoriesService();
 
-router.get('/', async (req, res, next) => {
-  try {
-    const categories = await service.find();
-    res.status(200).json(categories);
-  } catch (error) {
-    next(error);
-  }
-});
+router.get('/',
+  async (req, res, next) => {
+    try {
+      const categories = await service.find();
+      res.status(200).json(categories);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 router.get(
   '/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin', 'manager', 'specialist', 'customer', 'guest'),
   validatorHandler(findOneCategorySchema, 'params'),
   async (req, res, next) => {
     try {
@@ -35,6 +40,8 @@ router.get(
 
 router.post(
   '/',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin', 'manager'),
   validatorHandler(createCategorySchema, 'body'),
   async (req, res, next) => {
     try {
@@ -50,6 +57,8 @@ router.post(
 
 router.patch(
   '/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin', 'manager'),
   validatorHandler(findOneCategorySchema, 'params'),
   validatorHandler(updateCategorySchema, 'body'),
   async (req, res, next) => {
@@ -66,6 +75,8 @@ router.patch(
 
 router.delete(
   '/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   validatorHandler(findOneCategorySchema, 'params'),
   async (req, res, next) => {
     try {

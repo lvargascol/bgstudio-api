@@ -94,4 +94,18 @@ router.delete(
   }
 );
 
+router.delete(
+  '/remove-service/:id',
+  validatorHandler(findOnePromoSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const removed = await service.removeService(id);
+      res.json(removed);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 module.exports = router;

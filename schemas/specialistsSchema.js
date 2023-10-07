@@ -38,6 +38,11 @@ const updateSpecialistSchema = Joi.object({
   userId: userId,
 });
 
+const addServiceToSpecialist = Joi.object({
+  specialistId: id.required(),
+  serviceId: id.required(),
+});
+
 const findOneCSpecialistSchema = Joi.object({
   id: id.required(),
 });
@@ -46,4 +51,5 @@ module.exports = {
   createSpecialistSchema,
   updateSpecialistSchema,
   findOneCSpecialistSchema,
+  addServiceToSpecialist,
 };

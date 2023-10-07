@@ -69,6 +69,12 @@ class Specialist extends Model {
       as: 'bookings',
       foreignKey: 'specialistId',
     });
+    this.belongsToMany(models.Service, {
+      as: 'services',
+      through: models.SpecialistService,
+      foreignKey: 'specialistId',
+      otherKey: 'serviceId',
+    });
   }
 
   static config(sequelize) {

@@ -14,6 +14,23 @@ class OrdersService {
     return response;
   }
 
+  async findByUser(userId) {
+    const response = await models.Order.findAll({
+      where: { '$user.id$': userId },
+      include: [
+        {
+          association: 'user',
+          include: ['customer'],
+        },
+      ],
+    });
+    response.forEach(order => {
+      delete order.user.dataValues.password;
+    });
+    return response;
+  }
+
+
   async find() {
     const response = await models.Order.findAll({
       // include: ['user'],

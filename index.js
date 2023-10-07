@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const routersApi = require('./routes');
-// const cors = require('cors');
+const { checkApiKey } = require('./middlewares/authHandler.js');
 const {
   logErrors,
   errorsHandler,
@@ -15,10 +15,16 @@ const port = process.env.PORT || 3005;
 app.use(express.json());
 app.use(cors());
 
+require('./utils/auth');
+
 routersApi(app);
 
 app.get('/', (req, res) => {
   res.send('Hello, mi primer server de express');
+});
+
+app.get('/hello', checkApiKey, (req, res) => {
+  res.send('Hola, esta ruta esta protegida');
 });
 
 app.listen(port, () => {

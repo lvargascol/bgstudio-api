@@ -1,30 +1,49 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
+const bcrypt = require('bcrypt');
 
 class CustomersService {
   constructor() {}
 
   async create(data) {
-    const response = await models.Customer.create(data, {
+    const hash = await bcrypt.hash(data.user.password, 10);
+    const newData = {
+      ...data,
+      user: {
+        ...data.user,
+        password: hash
+      }
+    };
+    const response = await models.Customer.create(newData, {  
       include: ['user'],
     });
+    delete response.user.dataValues.password;
     return response;
   }
+
 
   async find() {
     const response = await models.Customer.findAll({
       include: ['user'],
     });
+
+    response.forEach(customer => {
+      delete customer.user.dataValues.password;
+    });
     return response;
   }
 
-  async findOne(id) {
+  async findOne(id,user) {
     const response = await models.Customer.findByPk(id, {
       include: ['user'],
     });
     if (!response) {
       throw boom.notFound('Customer not found');
-    }
+    };
+    if ((response.user.id != user.sub) && (user.role === 'customer')) {
+      throw boom.unauthorized();
+    } 
+    delete response.user.dataValues.password;
     return response;
   }
 
