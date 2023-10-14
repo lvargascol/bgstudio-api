@@ -19,17 +19,8 @@ require('./utils/auth');
 
 routersApi(app);
 
-app.get('/', (req, res) => {
-  res.send('Hello, mi primer server de express');
-});
 
-app.get('/hello', checkApiKey, (req, res) => {
-  res.send('Hola, esta ruta esta protegida');
-});
-
-app.listen(port, () => {
-  console.log('Mi port es ' + port);
-});
+app.listen(port, () => {});
 
 // //Whitelist contiene los dominios habilitados para acceder a nuesta API
 

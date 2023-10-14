@@ -25,7 +25,11 @@ router.get('/',
 router.get(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('admin', 'manager', 'specialist', 'customer', 'guest'),
+  checkRoles(
+    'admin',
+    'manager',
+    'specialist',
+  ),
   validatorHandler(findOneCategorySchema, 'params'),
   async (req, res, next) => {
     try {
@@ -41,7 +45,10 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('admin', 'manager'),
+  checkRoles(
+    'admin',
+    'manager',
+  ),
   validatorHandler(createCategorySchema, 'body'),
   async (req, res, next) => {
     try {
@@ -58,7 +65,10 @@ router.post(
 router.patch(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('admin', 'manager'),
+  checkRoles(
+    'admin',
+    'manager',
+  ),
   validatorHandler(findOneCategorySchema, 'params'),
   validatorHandler(updateCategorySchema, 'body'),
   async (req, res, next) => {
@@ -76,7 +86,9 @@ router.patch(
 router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  checkRoles('admin'),
+  checkRoles(
+    'admin',
+  ),
   validatorHandler(findOneCategorySchema, 'params'),
   async (req, res, next) => {
     try {

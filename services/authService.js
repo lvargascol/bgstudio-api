@@ -25,6 +25,20 @@ class AuthService {
         return user;
     }
 
+    async getProfile(id) {
+        const user = await userService.findOne(id);
+        delete user.dataValues.password;
+        delete user.dataValues.recoveryToken;  
+        delete user.dataValues.createdAt;
+        if (!user.customer) {
+            delete user.dataValues.customer;        
+        }      
+        if (!user.specialist) {
+            delete user.dataValues.specialist;        
+        }      
+        return user; 
+    }
+
     signToken(user) {
         const payload = {
             sub: user.id,
@@ -41,10 +55,8 @@ class AuthService {
         }
         const payload = { sub: user.id, };
         const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '15min' });
-        const link = `http://myfrontend.com/recovery?token=${token}`;
+        const link = `${config.frontendUrl}/recovery/change-password?token=${token}`;
         await userService.update(user.id, { recoveryToken: token });
-
-
         const htmlMessage = `<b>Hi!</b><br>Click on the link to recover your password<br><a href="${link}">Recover password</a>`;
         await mailService.sendMail(email, 'Password recovery', htmlMessage);
         return { message: 'Email sent' };

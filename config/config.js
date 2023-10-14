@@ -16,6 +16,7 @@ const config = {
   mailPassword: process.env.MAIL_PASSWORD,
   mailHost: process.env.MAIL_HOST,
   mailPort: process.env.MAIL_PORT,
+  frontendUrl: process.env.FRONTEND_URL,
 };
 
 module.exports = { config };

@@ -5,6 +5,7 @@ const { config } = require('../config/config');
 const { validatorHandler } = require('../middlewares/validatorHandler');
 const { recoveryPasswordSchema, createNewPasswordSchema } = require('./../schemas/authSchema');
 const AuthService = require('./../services/authService');
+const { checkRoles } = require('../middlewares/authHandler');
 
 const router = express.Router();
 
@@ -22,6 +23,27 @@ router.post(
     }
   }
 );
+
+router.get(
+  '/profile',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'specialist',
+    // 'customer',
+    // 'guest'
+  ),
+  async (req, res, next) => {
+    try {
+      const user = await service.getProfile(req.user.sub);
+      res.status(200).json(user);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+);  
 
 router.post(
   '/recovery',
@@ -44,13 +66,9 @@ router.post(
   async (req, res, next) => {
     try {
       const { token, newPassword } = req.body;
-      console.log(token);
-      console.log(newPassword);
-
       const response = await service.changePassword(token, newPassword);
       res.status(200).json(response);
     } catch (error) {
-      console.error(error);
       next(error);
     }
   }
