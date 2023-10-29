@@ -59,6 +59,7 @@ Before you dive in, ensure you meet these requirements:
 `npm run start`
 
 ##Configuration
+
 Before running BGStudio-API, make sure to configure the following settings in the .env file:
 
 **PORT**: Specify the port number on which the API will run.
@@ -77,6 +78,7 @@ Before running BGStudio-API, make sure to configure the following settings in th
 **FRONTEND_URL**: Specify the URL of the frontend site.
 
 ##API Endpoints
+
 **BGStudio-API** exposes the following API endpoints, each serving a specific purpose in salon management:
 
 `/auth`: Handle authentication and user management.
@@ -96,9 +98,11 @@ Before running BGStudio-API, make sure to configure the following settings in th
 Each of these endpoints supports standard HTTP methods like GET, POST, PATCH, and DELETE, allowing for full CRUD (Create, Read, Update, Delete) functionality.
 
 ##Authentication
+
 BGStudio-API utilizes PassportJS for authentication. To access protected endpoints, you need to obtain an authentication token. Make a POST request to `/auth/login` with valid credentials to receive a token. Include this token in the request headers of protected endpoints to ensure secure access.
 
 ##Contributing
+
 We welcome contributions from the community! If you'd like to contribute to this project, please follow these steps:
 
 1. Fork the repository.
@@ -108,9 +112,11 @@ We welcome contributions from the community! If you'd like to contribute to this
 1. Open a pull request, and our team will review your contribution.	
 
 ##License
+
 This project is licensed under the [MIT License](https://opensource.org/license/mit/http:// "MIT License.").
 
 ##API Documentation
+
 For detailed API documentation, examples, and usage guidelines, please refer to the [Swagger Documentation](https://bgstudio-api-production.up.railway.app/api-docs/ "Swagger Documentation"). The Swagger documentation provides comprehensive information about the API endpoints, request parameters, and responses, making it easy for developers to understand and use the API.
 
 ------------
