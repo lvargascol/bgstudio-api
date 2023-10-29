@@ -9,11 +9,11 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Configuration](#configuration)
-- [Endpoints](#endpoints)
+- [Endpoints](#api-endpoints)
 - [Authentication](#authentication)
 - [Contributing](#contributing)
 - [License](#license)
-- [API Documentation](#api_documentation)
+- [API Documentation](#api-documentation)
 
 ## Features
 
@@ -27,7 +27,6 @@
 - **Orders**: Efficiently handle orders with `/orders`.
 - **Payments**: Control payment-related operations via `/payments`.
 - **Products**: Keep track of your salon's products and inventory using `/products`.
-- **Profile**: Manage user profiles and settings through `/profile`.
 - **Promotions**: Create and manage enticing promotional offers via `/promos`.
 - **Services**: Easily manage a variety of beauty services offered by your salon with `/services`.
 - **Specialists**: Manage crucial information about your salon's specialists via `/specialists`.
@@ -58,64 +57,64 @@ Before you dive in, ensure you meet these requirements:
 1. Start the API:
 `npm run start`
 
-##Configuration
+## Configuration
 
 Before running BGStudio-API, make sure to configure the following settings in the .env file:
 
-**PORT**: Specify the port number on which the API will run.
-**DB_USER**: Specify the User to access the Database.
-**DB_PASSWORD**: Specify the Password to access the Database.
-**DB_HOST**: Specify the Database Host.
-**DB_NAME**: Specify the name of the Database.
-**DB_PORT**: Specify the port number on which the Database will run.
-**DATABASE_URL**: Provide the URL to your PostgreSQL database.
-**API_KEY**: Assign a secret key for authentication, such as JWT, to enhance security.
-**JWT_SECRET**: Assign a secret phrase for token encryption.
-**MAIL_USER**: Specify a user address from which to send emails.
-**MAIL_PASSWORD**: Specify the user email password.
-**MAIL_HOST**: Specify the user email host.
-**MAIL_PORT**: Specify the user email ṕort.
-**FRONTEND_URL**: Specify the URL of the frontend site.
+- **PORT**: Specify the port number on which the API will run.
+- **DB_USER**: Specify the User to access the Database.
+- **DB_PASSWORD**: Specify the Password to access the Database.
+- **DB_HOST**: Specify the Database Host.
+- **DB_NAME**: Specify the name of the Database.
+- **DB_PORT**: Specify the port number on which the Database will run.
+- **DATABASE_URL**: Provide the URL to your PostgreSQL database.
+- **API_KEY**: Assign a secret key for authentication, such as JWT, to enhance security.
+- **JWT_SECRET**: Assign a secret phrase for token encryption.
+- **MAIL_USER**: Specify a user address from which to send emails.
+- **MAIL_PASSWORD**: Specify the user email password.
+- **MAIL_HOST**: Specify the user email host.
+- **MAIL_PORT**: Specify the user email ṕort.
+- **FRONTEND_URL**: Specify the URL of the frontend site.
 
-##API Endpoints
+## API Endpoints
 
 **BGStudio-API** exposes the following API endpoints, each serving a specific purpose in salon management:
 
-`/auth`: Handle authentication and user management.
-`/bookings`: Enable online booking for salon services.
-`/categories`: Manage product categories.
-`/consumables`: Handle consumables and related operations.
-`/customers`: Handle customer profiles and interactions.
-`/orders`: Manage orders for products and services.
-`/payments`: Control payment-related operations.
-`/products`: Handle salon products and their inventory.
-`/promotions`: Create and manage promotional offers.
-`/services`: Manage beauty salon services.
-`/specialists`: Manage specialist information.
-`/stocks`: Track product inventory and stocks.
-`/users`: Handle user-related operations.
+- `/auth`: Handle authentication and user management.
+- `/bookings`: Enable online booking for salon services.
+- `/categories`: Manage product categories.
+- `/consumables`: Handle consumables and related operations.
+- `/customers`: Handle customer profiles and interactions.
+- `/orders`: Manage orders for products and services.
+- `/payments`: Control payment-related operations.
+- `/products`: Handle salon products and their inventory.
+- `/promotions`: Create and manage promotional offers.
+- `/services`: Manage beauty salon services.
+- `/specialists`: Manage specialist information.
+- `/stocks`: Track product inventory and stocks.
+- `/users`: Handle user-related operations.
 
 Each of these endpoints supports standard HTTP methods like GET, POST, PATCH, and DELETE, allowing for full CRUD (Create, Read, Update, Delete) functionality.
 
-##Authentication
+## Authentication
 
 BGStudio-API utilizes PassportJS for authentication. To access protected endpoints, you need to obtain an authentication token. Make a POST request to `/auth/login` with valid credentials to receive a token. Include this token in the request headers of protected endpoints to ensure secure access.
 
-##Contributing
+## Contributing
 
 We welcome contributions from the community! If you'd like to contribute to this project, please follow these steps:
 
 1. Fork the repository.
-1. Create your feature branch (`git checkout -b feature/your-feature`).
-1. Commit your changes (`git commit -m '[ADD] Some feature'`).
-1. Push your changes to the branch (`git push origin feature/your-feature`).
+1. Create your feature branch: `git checkout -b feature/your-feature`.
+1. Commit your changes: `git commit -m '[ADD] Some feature'`.
+1. Push your changes to the branch: `git push origin feature/your-feature`.
 1. Open a pull request, and our team will review your contribution.	
 
-##License
+## License
 
 This project is licensed under the [MIT License](https://opensource.org/license/mit/http:// "MIT License.").
 
-##API Documentation
+## API Documentation
 
 For detailed API documentation, examples, and usage guidelines, please refer to the [Swagger Documentation](https://bgstudio-api-production.up.railway.app/api-docs/ "Swagger Documentation"). The Swagger documentation provides comprehensive information about the API endpoints, request parameters, and responses, making it easy for developers to understand and use the API.
 
