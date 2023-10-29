@@ -142,3 +142,157 @@ router.delete(
 );
 
 module.exports = router;
+
+/**
+ * @openapi
+ * /api/v1/promos:
+ *   get:
+ *     tags:
+ *       - Promos
+ *     summary: Get all promotions
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Promo'
+ *   post:
+ *     tags:
+ *       - Promos
+ *     summary: Create a new promotion
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreatePromo'
+ *     responses:
+ *       '200':
+ *         description: Promotion created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Promo'
+ * /api/v1/promos/add-service:
+ *   post:
+ *     tags:
+ *       - Promos
+ *     summary: Add a service to a promotion
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AddServiceToPromo'
+ *     responses:
+ *       '200':
+ *         description: Service added to promotion
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: message
+ *                   default: Service successfully added to promotion
+ * /api/v1/promos/remove-service/{id}:
+ *   delete:
+ *     tags: 
+ *       - Promos
+ *     summary: Remove a Service from Promo by Promo-Service ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           description: Promo-Service ID
+ *     responses:
+ *       '200':
+ *         description: Service removed from Promo
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: message
+ *                   default: Service successfully removed from promotion
+ *                 id:
+ *                   type: integer
+ *                   description: Promo-Service id
+ * /api/v1/promos/{id}:
+ *   get:
+ *     tags:
+ *       - Promos
+ *     summary: Get a promotion by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Promotion ID
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Promo'
+ *   patch:
+ *     tags:
+ *       - Promos
+ *     summary: Update a promotion by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Promotion ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdatePromo'
+ *     responses:
+ *       '200':
+ *         description: Promotion updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Promo'
+ *   delete:
+ *     tags:
+ *       - Promos
+ *     summary: Delete a promotion by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Promotion ID
+ *     responses:
+ *       '200':
+ *         description: Promotion deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: message
+ *                   default: Promotion successfully deleted
+ *                 id:
+ *                   type: integer
+ *                   description: Promotion ID
+ */

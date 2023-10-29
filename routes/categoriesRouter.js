@@ -102,3 +102,107 @@ router.delete(
 );
 
 module.exports = router;
+
+/**
+ * @openapi
+ * /api/v1/categories:
+ *   get:
+ *     tags:
+ *       - Categories
+ *     summary: Get all categories
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Category'
+ *   post:
+ *     tags:
+ *       - Categories
+ *     summary: Create a new category
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateCategory'
+ *     responses:
+ *       '200':
+ *         description: Category created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Category'
+ * /api/v1/categories/{id}:
+ *   get:
+ *     tags:
+ *       - Categories
+ *     summary: Get a category by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Category ID
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Category'
+ *   patch:
+ *     tags:
+ *       - Categories
+ *     summary: Update a category by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Category ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateCategory'
+ *     responses:
+ *       '200':
+ *         description: Category updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Category'
+ *   delete:
+ *     tags:
+ *       - Categories
+ *     summary: Delete a category by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Category ID
+ *     responses:
+ *       '200':
+ *         description: Category deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: message
+ *                   default: Category successfully deleted
+ *                 id:
+ *                   type: integer
+ *                   description: Category ID
+ */

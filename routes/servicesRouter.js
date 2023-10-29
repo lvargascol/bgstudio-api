@@ -100,5 +100,108 @@ router.delete(
   }
 );
 
-
 module.exports = router;
+
+/**
+ * @openapi
+ * /api/v1/services:
+ *   get:
+ *     tags:
+ *       - Services
+ *     summary: Get all services
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Service'
+ *   post:
+ *     tags:
+ *       - Services
+ *     summary: Create a new service
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateService'
+ *     responses:
+ *       '200':
+ *         description: Service created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Service'
+ * /api/v1/services/{id}:
+ *   get:
+ *     tags:
+ *       - Services
+ *     summary: Get a service by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Service ID
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Service'
+ *   patch:
+ *     tags:
+ *       - Services
+ *     summary: Update a service by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Service ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateService'
+ *     responses:
+ *       '200':
+ *         description: Service updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Service'
+ *   delete:
+ *     tags:
+ *       - Services
+ *     summary: Delete a service by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Service ID
+ *     responses:
+ *       '200':
+ *         description: Service deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: message
+ *                   default: Service successfully deleted
+ *                 id:
+ *                   type: integer
+ *                   description: Service ID
+ */

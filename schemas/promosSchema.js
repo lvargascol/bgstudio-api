@@ -41,3 +41,96 @@ module.exports = {
   findOnePromoSchema,
   addServiceToPromo,
 };
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Promo:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: promotion id
+ *         name:
+ *           type: string
+ *           description: promotion name
+ *           example: Promotion n°1
+ *         price:
+ *           type: integer
+ *           description: promotion price
+ *           example: 150
+ *         minutes:
+ *           type: integer
+ *           description: time in minutes required for the promotion services
+ *           example: 15
+ *         image:
+ *           type: string
+ *           description: promotion image
+ *           example: https://example.img
+ *         description:
+ *           type: string
+ *           description: promotion detailed description
+ *           example: This promotion description
+ *         active:
+ *           type: boolean
+ *           description: is this promotion currently available
+ *     CreatePromo:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: promotion name
+ *           example: Promotion n°1
+ *         price:
+ *           type: integer
+ *           description: promotion price
+ *           example: 150
+ *         minutes:
+ *           type: integer
+ *           description: time in minutes required for the promotion services
+ *           example: 15
+ *         image:
+ *           type: string
+ *           description: promotion image
+ *           example: https://example.img
+ *         description:
+ *           type: string
+ *           description: promotion detailed description
+ *           example: This promotion description
+ *     UpdatePromo:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: promotion name
+ *           example: Promotion n°1
+ *         price:
+ *           type: integer
+ *           description: promotion price
+ *           example: 150
+ *         minutes:
+ *           type: integer
+ *           description: time in minutes required for the promotion services
+ *           example: 15
+ *         image:
+ *           type: string
+ *           description: promotion image
+ *           example: https://example.img
+ *         description:
+ *           type: string
+ *           description: promotion detailed description
+ *           example: This promotion description
+ *         active:
+ *           type: boolean
+ *           description: is this promotion currently available
+ *     AddServiceToPromo:
+ *       type: object
+ *       properties:
+ *         promoId:
+ *           type: integer
+ *           description: promotion id
+ *         serviceId:
+ *           type: integer
+ *           description: service id
+ */

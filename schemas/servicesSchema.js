@@ -18,6 +18,7 @@ const createServiceSchema = Joi.object({
   categoryId: categoryId.required(),
 });
 
+
 const updateServiceSchema = Joi.object({
   name: name,
   price: price,
@@ -37,3 +38,96 @@ module.exports = {
   updateServiceSchema,
   findOneServiceSchema,
 };
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Service:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: Service id
+ *         name:
+ *           type: string
+ *           description: Service name
+ *           example: Service n°1
+ *         price:
+ *           type: integer
+ *           description: Service price
+ *           example: 70
+ *         minutes:
+ *           type: integer
+ *           description: time in minutes required for the service
+ *           example: 5
+ *         image:
+ *           type: string
+ *           description: Service image
+ *           example: https://example.img
+ *         description:
+ *           type: string
+ *           description: Service detailed description
+ *           example: This service description
+ *         active:
+ *           type: boolean
+ *           description: is this service currently available
+ *         categoryId:
+ *           type: integer
+ *           description: Category id
+ *     CreateService:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Service name
+ *           example: Service n°1
+ *         price:
+ *           type: integer
+ *           description: Service price
+ *           example: 70
+ *         minutes:
+ *           type: integer
+ *           description: time in minutes required for the service
+ *           example: 5
+ *         image:
+ *           type: string
+ *           description: Service image
+ *           example: https://example.img
+ *         description:
+ *           type: string
+ *           description: Service detailed description
+ *           example: This service description
+ *         categoryId:
+ *           type: integer
+ *           description: Category id
+ *     UpdateService:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Service name
+ *           example: Service n°1
+ *         price:
+ *           type: integer
+ *           description: Service price
+ *           example: 70
+ *         minutes:
+ *           type: integer
+ *           description: time in minutes required for the service
+ *           example: 5
+ *         image:
+ *           type: string
+ *           description: Service image
+ *           example: https://example.img
+ *         description:
+ *           type: string
+ *           description: Service detailed description
+ *           example: This service description
+ *         active:
+ *           type: boolean
+ *           description: is this service currently available
+ *         categoryId:
+ *           type: integer
+ *           description: Category id
+ */

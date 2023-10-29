@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const {swaggerDocs} = require('./utils/swagger/');
+
 const routersApi = require('./routes');
-const { checkApiKey } = require('./middlewares/authHandler.js');
 const {
   logErrors,
   errorsHandler,
@@ -9,16 +10,19 @@ const {
   validationErrorHandler,
 } = require('./middlewares/errorHandler.js');
 
+
 const app = express();
 const port = process.env.PORT || 3005;
 
 app.use(express.json());
 app.use(cors());
 
+swaggerDocs(app, port);
+
+
 require('./utils/auth');
 
 routersApi(app);
-
 
 app.listen(port, () => {});
 

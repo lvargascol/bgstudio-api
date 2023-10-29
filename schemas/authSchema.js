@@ -16,3 +16,40 @@ const recoveryPasswordSchema  = Joi.object({
 
 
 module.exports = { recoveryPasswordSchema , createNewPasswordSchema };
+
+/** 
+ * @openapi
+ * components:
+ *   schemas:
+ *     UserProfile:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: user id
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: user email
+ *           example: example@mail.com
+ *     RecoveryRequest:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: user email
+ *           example: example@mail.com
+ *     ChangePasswordRequest:
+ *       type: object
+ *       properties:
+ *         token:
+ *           type: string
+ *           description: recovery token
+ *           example: p4sSw0rDr3c0v3RyToKeN
+ *         newPassword:
+ *           type: string
+ *           format: password
+ *           description: user password
+ *           example: password123
+ */

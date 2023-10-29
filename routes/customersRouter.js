@@ -4,7 +4,6 @@ const CustomersService = require('../services/customersServices');
 const { validatorHandler } = require('../middlewares/validatorHandler');
 const {
   createCustomerSchema,
-  createGuestCustomerSchema,
   updateCustomerSchema,
   findOneCustomerSchema,
 } = require('../schemas/customersSchema');
@@ -61,20 +60,6 @@ router.post(
   }
 );
 
-// router.post(
-//   '/guest',
-//   validatorHandler(createGuestCustomerSchema, 'body'),
-//   async (req, res, next) => {
-//     try {
-//       const body = req.body;
-//       const newCustomer = await service.create(body);
-//       res.json(newCustomer);
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
-
 router.patch(
   '/:id',
   passport.authenticate('jwt', { session: false }),
@@ -115,3 +100,107 @@ router.delete(
 );
 
 module.exports = router;
+
+/** 
+ * @openapi
+ * /api/v1/customers:
+ *   get:
+ *     tags:
+ *       - Customers
+ *     summary: Get all customers
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Customer'
+ *   post:
+ *     tags:
+ *       - Customers
+ *     summary: Create a new customer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateCustomer'
+ *     responses:
+ *       '200':
+ *         description: Customer created
+ *         content:
+ *           application/json:
+ *              schema:
+ *               $ref: '#/components/schemas/Customer'
+ * /api/v1/customers/{id}:
+ *   get:
+ *     tags:
+ *       - Customers
+ *     summary: Get a customer by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           description: Customer ID
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Customer' 
+ *   patch:
+ *     tags:
+ *       - Customers
+ *     summary: Update a customer by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Customer ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateCustomer'
+ *     responses:
+ *       '200':
+ *         description: Customer updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Customer'
+ *   delete:
+ *     tags:
+ *       - Customers
+ *     summary: Delete a customer by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Customer ID
+ *     responses:
+ *       '200':
+ *         description: Customer deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: message
+ *                   default: Customer successfully deleted
+ *                 id:
+ *                   type: integer
+ *                   description: Customer ID
+ */

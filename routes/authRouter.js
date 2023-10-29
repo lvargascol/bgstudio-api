@@ -75,3 +75,80 @@ router.post(
 );
 
 module.exports = router;
+
+/**
+ * @openapi
+ * /api/v1/auth/login:
+ *   post:
+ *     tags:
+ *       - Authentication
+ *     summary: User login
+ *     responses:
+ *       '200':
+ *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: login token
+ *                   example: l0gInToKeN
+ * /api/v1/auth/profile:
+ *   get:
+ *     tags:
+ *       - Authentication
+ *     summary: Get user profile
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserProfile'
+ * /api/v1/auth/recovery:
+ *   post:
+ *     tags:
+ *       - Authentication
+ *     summary: Request password recovery
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/RecoveryRequest'
+ *     responses:
+ *       '200':
+ *         description: Recovery request sent
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   default: Recovery email sent
+ * /api/v1/auth/change-password:
+ *   post:
+ *     tags:
+ *       - Authentication
+ *     summary: Change password
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/ChangePasswordRequest'
+ *     responses:
+ *       '200':
+ *         description: Password changed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   default: Password successfully changed
+ */

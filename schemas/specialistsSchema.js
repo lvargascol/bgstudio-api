@@ -43,13 +43,165 @@ const addServiceToSpecialist = Joi.object({
   serviceId: id.required(),
 });
 
-const findOneCSpecialistSchema = Joi.object({
+const findOneSpecialistSchema = Joi.object({
   id: id.required(),
 });
 
 module.exports = {
   createSpecialistSchema,
   updateSpecialistSchema,
-  findOneCSpecialistSchema,
+  findOneSpecialistSchema,
   addServiceToSpecialist,
 };
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Specialist:
+ *       type: object
+ *       properties:
+ *         id:
+ *          type: integer
+ *          description: specialist id
+ *         firstName:
+ *           type: string
+ *           description: Specialist first name
+ *           example: Maria
+ *         lastName:
+ *           type: string
+ *           description: specialist last name
+ *           example: Perez
+ *         phone:
+ *           type: string
+ *           description: specialist phone
+ *           example: +549 11223344
+ *         position:
+ *           type: string
+ *           description: specialist position
+ *           example: eyebrow artist
+ *         startedAt:
+ *           type: string
+ *           format: date
+ *           description: date when the specialist started
+ *           example: 2022-01-01
+ *         birthday:
+ *           type: string
+ *           format: date
+ *           description: birthday of the specialist
+ *           example: 1990-01-01
+ *         active:
+ *           type: boolean
+ *           description: is the specialist currently working
+ *         user:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: integer
+ *               description: user id
+ *             email:
+ *               type: string
+ *               format: email
+ *               description: user email
+ *               example: example@mail.com
+ *             role:
+ *               type: string
+ *               description: user role
+ *               example: specialist
+ *     CreateSpecialist:
+ *       type: object
+ *       properties:
+ *         firstName:
+ *           type: string
+ *           description: Specialist first name
+ *           example: Maria
+ *         lastName:
+ *           type: string
+ *           description: specialist last name
+ *           example: Perez
+ *         phone:
+ *           type: string
+ *           description: specialist phone
+ *           example: +549 11223344
+ *         position:
+ *           type: string
+ *           description: specialist position
+ *           example: eyebrow artist
+ *         startedAt:
+ *           type: string
+ *           format: date
+ *           description: date when the specialist started
+ *           example: 2022-01-01
+ *         birthday:
+ *           type: string
+ *           format: date
+ *           description: birthday of the specialist
+ *           example: 1990-01-01
+ *         user:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: integer
+ *               description: user id
+ *             email:
+ *               type: string
+ *               format: email
+ *               description: user email
+ *               example: example@mail.com
+ *             role:
+ *               type: string
+ *               description: user role
+ *               example: specialist
+ *           required:
+ *             - firstName
+ *             - lastName
+ *             - phone
+ *             - position
+ *             - startedAt
+ *             - birthday
+ *             - user
+ *     UpdateSpecialist:
+ *       type: object
+ *       properties:
+ *         firstName:
+ *           type: string
+ *           description: Specialist first name
+ *           example: Maria
+ *         lastName:
+ *           type: string
+ *           description: specialist last name
+ *           example: Perez
+ *         phone:
+ *           type: string
+ *           description: specialist phone
+ *           example: +549 11223344
+ *         position:
+ *           type: string
+ *           description: specialist position
+ *           example: eyebrow artist
+ *         startedAt:
+ *           type: string
+ *           format: date
+ *           description: date when the specialist started
+ *           example: 2022-01-01
+ *         birthday:
+ *           type: string
+ *           format: date
+ *           description: birthday of the specialist
+ *           example: 1990-01-01
+ *         active:
+ *           type: boolean
+ *           description: is the specialist currently working
+ *         userID:
+ *           type: integer
+ *           description: user id
+ *     AddServiceToSpecialist:
+ *       type: object
+ *       properties:
+ *         specialistId:
+ *          type: integer
+ *          description: specialist id
+ *         serviceID:
+ *           type: integer
+ *           description: service id
+ */

@@ -23,3 +23,45 @@ module.exports = {
   updateCategorySchema,
   findOneCategorySchema,
 };
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Category:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: category id
+ *         name:
+ *           type: string
+ *           description: category name
+ *           example: category
+ *         image:
+ *           type: string
+ *           description: category image
+ *           example: https://example.img
+ *     CreateCategory:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: category name
+ *           example: category
+ *         image:
+ *           type: string
+ *           description: category image
+ *           example: https://example.img
+ *     UpdateCategory:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: category name
+ *           example: category
+ *         image:
+ *           type: string
+ *           description: category image
+ *           example: https://example.img
+ */

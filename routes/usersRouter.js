@@ -105,3 +105,109 @@ router.delete(
 );
 
 module.exports = router;
+
+/** 
+ * @openapi
+ * /api/v1/users:
+ *   get:
+ *     tags: 
+ *       - Users
+ *     summary: Get all users 
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/User'
+ * 
+ *   post:
+ *     tags: 
+ *       - Users
+ *     summary: Create a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateUser'
+ *     responses:
+ *       200:
+ *         description: User created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ * /api/v1/users/{id}:
+ *   get:
+ *     tags: 
+ *       - Users
+ *     summary: Get an user by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           description: User ID
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *   patch:
+ *     tags: 
+ *       - Users
+ *     summary: Update an user by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           description: User ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateUser'
+ *     responses:
+ *       200:
+ *         description: User updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *   delete:
+ *     tags: 
+ *       - Users
+ *     summary: Delete an user by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           description: User ID
+ *     responses:
+ *       200:
+ *         description: User deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: message
+ *                   default: User successfully deleted
+ *                 id:
+ *                   type: integer
+ *                   description: user id
+ *         
+ */
