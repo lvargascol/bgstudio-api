@@ -40,7 +40,7 @@ const PaymentSchema = {
 
 class Payment extends Model {
   static associate(models) {
-    this.belongsTo(models.Order, { as: 'orders' });
+    this.belongsTo(models.Order, { as: 'order' });
   }
 
   static config(sequelize) {

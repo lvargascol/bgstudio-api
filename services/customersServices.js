@@ -47,6 +47,14 @@ class CustomersService {
     return response;
   }
 
+  async checkOne(id) {
+    const response = await models.Customer.findByPk(id);
+    if (!response) {
+      throw boom.notFound('Customer not found');
+    };
+    return response;
+  }
+
   async update(id, changes) {
     const response = await this.findOne(id);
     await response.update(changes);

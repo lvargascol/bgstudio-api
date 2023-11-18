@@ -46,7 +46,9 @@ class OrdersService {
           association: 'user',
           include: ['customer'],
         },
-        'products',
+        'bookings',
+        'items',
+        'payments',
       ],
     });
     if (!response) {

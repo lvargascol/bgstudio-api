@@ -86,6 +86,18 @@ class Booking extends Model {
     this.belongsTo(models.Customer, { as: 'customer' });
     this.belongsTo(models.Specialist, { as: 'specialist' });
     this.belongsTo(models.Order, { as: 'order' });
+    this.belongsToMany(models.Service, {
+      as: 'services',
+      through: models.BookingService,
+      foreignKey: 'bookingId',
+      otherKey: 'serviceId',
+    });
+    this.belongsToMany(models.Promo, {
+      as: 'promos',
+      through: models.BookingPromo,
+      foreignKey: 'bookingId',
+      otherKey: 'promoId',
+    });
   }
 
   static config(sequelize) {

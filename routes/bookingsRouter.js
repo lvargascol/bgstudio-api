@@ -1,27 +1,44 @@
 const express = require('express');
+const passport = require('passport');
 const BookingsService = require('../services/bookingsServices');
 const { validatorHandler } = require('../middlewares/validatorHandler');
 const {
   createBookingSchema,
   updateBookingSchema,
   findOneBookingSchema,
+  addServiceSchema,
+  addPromoSchema,
 } = require('../schemas/bookingsSchema');
+const { checkRoles } = require('../middlewares/authHandler');
 
 const router = express.Router();
-
 const service = new BookingsService();
 
-router.get('/', async (req, res, next) => {
-  try {
-    const bookings = await service.find();
-    res.status(200).json(bookings);
-  } catch (error) {
-    next(error);
-  }
-});
+router.get('/',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'specialist',
+  ),
+  async (req, res, next) => {
+    try {
+      const bookings = await service.find();
+      res.status(200).json(bookings);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 router.get(
   '/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'specialist',
+    'customer',
+  ),
   validatorHandler(findOneBookingSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -36,6 +53,12 @@ router.get(
 
 router.post(
   '/',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'customer',
+  ),
   validatorHandler(createBookingSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -49,8 +72,96 @@ router.post(
   }
 );
 
+router.post(
+  '/add-service/',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'customer',
+  ),
+  validatorHandler(addServiceSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const addService = await service.addService(body);
+      res.json(addService);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  '/remove-service/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'customer',
+  ),
+  validatorHandler(findOneBookingSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const removed = await service.removeService(id);
+      res.json(removed);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  '/add-promo/',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'customer',
+  ),
+  validatorHandler(addPromoSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const addPromo = await service.addPromo(body);
+      res.json(addPromo);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  '/remove-promo/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'customer',
+  ),
+  validatorHandler(findOneBookingSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const removed = await service.removePromo(id);
+      res.json(removed);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.patch(
   '/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'customer',
+  ),
   validatorHandler(findOneBookingSchema, 'params'),
   validatorHandler(updateBookingSchema, 'body'),
   async (req, res, next) => {
@@ -67,6 +178,12 @@ router.patch(
 
 router.delete(
   '/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'customer',
+  ),
   validatorHandler(findOneBookingSchema, 'params'),
   async (req, res, next) => {
     try {
