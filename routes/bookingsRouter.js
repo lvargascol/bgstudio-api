@@ -6,6 +6,7 @@ const {
   createBookingSchema,
   updateBookingSchema,
   findOneBookingSchema,
+  findBookingsByDateSchema,
   addServiceSchema,
   addPromoSchema,
 } = require('../schemas/bookingsSchema');
@@ -45,6 +46,46 @@ router.get(
       const { id } = req.params;
       const booking = await service.findOne(id);
       res.status(200).json(booking);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  '/date/:date',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'specialist',
+  ),
+  validatorHandler(findBookingsByDateSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { date } = req.params;
+      const booking = await service.findByDate(date);
+      res.status(200).json(booking);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  '/schedule/:date',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'specialist',
+  ),
+  validatorHandler(findBookingsByDateSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { date } = req.params;
+      const schedule = await service.scheduleAvailability(date);
+      res.status(200).json(schedule);
     } catch (error) {
       next(error);
     }

@@ -1,4 +1,6 @@
 const boom = require('@hapi/boom');
+const moment = require('moment');
+const { Op } = require('sequelize');
 const { models } = require('../libs/sequelize');
 const SpecialistsService = require('./specialistsServices');
 const CustomersService = require('./customersServices');
@@ -9,9 +11,8 @@ class BookingsService {
   constructor() { }
 
   async create(data) {
-    console.log(data.customerId);
     await customersService.checkOne(data.customerId);
-    await specialistsService.findOne(data.specialistId);
+    await specialistsService.findOne(data.specialistId);    
     const booking = await models.Booking.create(data, {
       include: ['order'],
     });
@@ -21,13 +22,47 @@ class BookingsService {
 
   async find() {
     const bookings = await models.Booking.findAll({
-      // include: ['customer'],
+      // include: [
+      //   'customer',
+      //   'specialist',
+      //   'services',
+      //   {
+      //     association: 'promos',
+      //     include: ['services'],
+      //   },
+      // ],
     });
     return bookings;
   }
 
   async findOne(id) {
     const booking = await models.Booking.findByPk(id, {
+      include: [
+        'order',
+        'customer',
+        'specialist',
+        'services',
+        {
+          association: 'promos',
+          include: ['services'],
+        },
+      ],
+    });
+    if (!booking) {
+      throw boom.notFound('Booking not found');
+    }
+    return booking;
+  }
+
+  async findByDate(date) {
+    const startDate = new Date(`${date}T00:00:00.000Z`);
+    const endDate = new Date(`${date}T23:59:59.999Z`);
+    const booking = await models.Booking.findAll({
+      where: {
+        date: {
+          [Op.between]: [startDate, endDate],
+        },
+      },
       include: [
         'order',
         'customer',
@@ -100,7 +135,7 @@ class BookingsService {
       throw boom.notFound('Promo not found');
     }
     const bookingId = bookingPromo.bookingId
-    await bookingPromo.destroy();
+    await bookingPromo.destroy(); 
     await this.updateTotals(bookingId);
     return {
       message: 'Promo successfully removed',
@@ -139,6 +174,68 @@ class BookingsService {
     }
     );
   }
+
+  async scheduleAvailability(date) {
+    const hoursArray = this.generateHoursArray(date, 15);
+    const bookings = await this.findByDate(moment(date).format('YYYY-MM-DD'));
+    bookings.forEach((booking) => {
+      let r = 0;
+      hoursArray.forEach((block) => {
+        if (moment(booking.date).format('HH:mm') === block.time) {    
+          if (booking.minutes < block.min) {
+            block.min = block.min - booking.minutes;
+          } else {
+            r = booking.minutes - block.min;
+            block.min = 0;
+          }
+        }
+        else if (r != 0) {
+          if (block.min >= r) {
+            block.min = block.min - r;
+            r = 0;
+          } else {
+            r = r - block.min;
+            block.min = 0;
+          }
+        }
+      });
+    });
+    return hoursArray;
+  };
+
+  generateHoursArray(date, step) {
+    const start = [];
+    const end = [];
+    for (let i = 0; i <= 6; i++) {
+      if (i === 0) {
+        start.push('10:00');
+        end.push('10:00');
+      } else if (i === 6) {
+        start.push('10:00');
+        end.push('17:00');
+      } else {
+        start.push('10:00');
+        end.push('20:00');
+      }
+    }
+    const day = moment(date).format('YYYY-MM-DD');
+    const initial = Date.parse(`${day}T${start[moment(date).format('d')]}`);
+    const final = Date.parse(`${day}T${end[moment(date).format('d')]}`);
+    const msPerMin = 60000;
+    const n = Math.trunc((final - initial) / (step * msPerMin));
+    const hoursArray = [];
+    if (n < 0) {
+      return hoursArray;
+    }
+    for (let i = 0; i < n; i++) {
+      hoursArray.push({
+        time: moment(initial).add(step * i, 'minutes').format('HH:mm'),
+        min: step,
+      });
+    }
+    return hoursArray;
+  }  
+  
 }
 
 module.exports = BookingsService;
