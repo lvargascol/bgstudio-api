@@ -80,6 +80,98 @@ class BookingsService {
     return booking;
   }
 
+  async findSalesByDate(date) {
+    const startDate = new Date(`${date}T00:00:00.000Z`);
+    const endDate = new Date(`${date}T23:59:59.999Z`);
+    const bookings = await models.Booking.findAll({
+      where: {
+        date: {
+          [Op.between]: [startDate, endDate],
+        },
+        done: true,
+      },
+      include: [
+        'services',
+        'promos',
+      ],
+    });
+    const sales = this.generateSalesFromBookings(bookings);
+    if (!sales) {
+      throw boom.notFound('Sales not found');
+    }
+    return sales;
+  }
+
+  async findSalesByDateAndSpecialist(date,specialistId) {
+    const startDate = new Date(`${date}T00:00:00.000Z`);
+    const endDate = new Date(`${date}T23:59:59.999Z`);
+    const bookings = await models.Booking.findAll({
+      where: {
+        date: {
+          [Op.between]: [startDate, endDate],
+        },
+        specialistId: specialistId,
+        done: true,
+      },
+      include: [
+        'services',
+        'promos',
+      ],
+    });
+    const sales = this.generateSalesFromBookings(bookings);
+    if (!sales) {
+      throw boom.notFound('Sales not found');
+    }
+    return sales;
+  }
+
+  async findTotalSalesOnInterval(start,end) {
+    const startDate = new Date(`${start}T00:00:00.000Z`);
+    const endDate = new Date(`${end}T23:59:59.999Z`);
+    const sales = await models.Booking.findAll({
+      where: {
+        date: {
+          [Op.between]: [startDate, endDate],
+        },
+        done: true,
+      },
+    });
+    const total = sales.reduce((sum,current) => sum + current.cost,0);
+    if (!sales) {
+      throw boom.notFound('Sales not found');
+    }
+    const totalSales = {
+      total: total,
+      count: sales.length,
+      average: sales.length === 0 ? 0 : total / sales.length,
+    }
+    return totalSales;
+  }
+
+  async findTotalSalesOnIntervalBySpecialist(start,end,specialistId) {
+    const startDate = new Date(`${start}T00:00:00.000Z`);
+    const endDate = new Date(`${end}T23:59:59.999Z`);
+    const sales = await models.Booking.findAll({
+      where: {
+        date: {
+          [Op.between]: [startDate, endDate],
+        },
+        specialistId: specialistId,
+        done: true,
+      },
+    });
+    const total = sales.reduce((sum,current) => sum + current.cost,0);
+    if (!sales) {
+      throw boom.notFound('Sales not found');
+    }
+    const totalSales = {
+      total: total,
+      count: sales.length,
+      average: sales.length === 0 ? 0 : total / sales.length,
+    }
+    return totalSales;
+  }
+
   async addService(data) {
     await this.serviceRepeated(data.bookingId,data.serviceId);
     const bookingService = await models.BookingService.create(data);
@@ -235,6 +327,36 @@ class BookingsService {
     }
     return hoursArray;
   }  
+
+  generateSalesFromBookings(bookings) {
+    bookings.forEach((booking) => {
+      delete booking.dataValues.notes;
+      delete booking.dataValues.createdAt;
+      delete booking.dataValues.minutes;
+      delete booking.dataValues.done;
+      delete booking.dataValues.customerId;
+      booking.services.forEach((service) => {
+        delete service.dataValues.createdAt;
+        delete service.dataValues.price;
+        delete service.dataValues.minutes;
+        delete service.dataValues.description;
+        delete service.dataValues.active;
+        delete service.dataValues.categoryId;
+        delete service.dataValues.BookingService;
+        delete service.dataValues.image;
+      })
+      booking.promos.forEach((promo) => {
+        delete promo.dataValues.createdAt;
+        delete promo.dataValues.price;
+        delete promo.dataValues.minutes;
+        delete promo.dataValues.description;
+        delete promo.dataValues.active;
+        delete promo.dataValues.BookingPromo;
+        delete promo.dataValues.image;
+      })
+    })
+    return bookings;
+  }
   
 }
 

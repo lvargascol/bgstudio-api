@@ -54,11 +54,30 @@ const findBookingsByDateSchema = Joi.object({
   date: day.required(),
 });
 
+const findBookingsByDateAndSpecialistSchema = Joi.object({
+  date: day.required(),
+  id: specialistId.required(),
+});
+
+const findBookingsOnIntervalSchema = Joi.object({
+  start: day.required(),
+  end: day.required(),
+});
+
+const findBookingsOnIntervalBySpecialistSchema = Joi.object({
+  start: day.required(),
+  end: day.required(),
+  id: specialistId.required(),
+});
+
 module.exports = {
   createBookingSchema,
   updateBookingSchema,
   findOneBookingSchema,
   findBookingsByDateSchema,
+  findBookingsByDateAndSpecialistSchema,
+  findBookingsOnIntervalSchema,
+  findBookingsOnIntervalBySpecialistSchema,
   addServiceSchema,
   addPromoSchema,
 };

@@ -7,6 +7,9 @@ const {
   updateBookingSchema,
   findOneBookingSchema,
   findBookingsByDateSchema,
+  findBookingsByDateAndSpecialistSchema,
+  findBookingsOnIntervalSchema,
+  findBookingsOnIntervalBySpecialistSchema,
   addServiceSchema,
   addPromoSchema,
 } = require('../schemas/bookingsSchema');
@@ -66,6 +69,82 @@ router.get(
       const { date } = req.params;
       const booking = await service.findByDate(date);
       res.status(200).json(booking);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  '/sales/:date',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+  ),
+  validatorHandler(findBookingsByDateSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { date } = req.params;
+      const sales = await service.findSalesByDate(date);
+      res.status(200).json(sales);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  '/sales/:date/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+  ),
+  validatorHandler(findBookingsByDateAndSpecialistSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { date, id } = req.params;
+      const sales = await service.findSalesByDateAndSpecialist(date, id);
+      res.status(200).json(sales);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  '/sales/total/:start/:end',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+  ),
+  validatorHandler(findBookingsOnIntervalSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { start, end } = req.params;
+      const totalSales = await service.findTotalSalesOnInterval(start, end);
+      res.status(200).json(totalSales);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  '/sales/total/:start/:end/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+  ),
+  validatorHandler(findBookingsOnIntervalBySpecialistSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { start, end, id } = req.params;
+      const totalSales = await service.findTotalSalesOnIntervalBySpecialist(start, end, id);
+      res.status(200).json(totalSales);
     } catch (error) {
       next(error);
     }
