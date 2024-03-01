@@ -41,7 +41,6 @@ const addPromoSchema = Joi.object({
 });
 
 const updateBookingSchema = Joi.object({
-  depositCheck: depositCheck,
   done: done,
   notes: notes,
 });

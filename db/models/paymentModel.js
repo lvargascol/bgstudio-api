@@ -20,10 +20,14 @@ const PaymentSchema = {
     allowNull: false,
     type: DataTypes.INTEGER,
   },
-  paid: {
+  confirmed: {
     allowNull: false,
     type: DataTypes.BOOLEAN,
     defaultValue: false,
+  },
+  type: {
+    allowNull: false,
+    type: DataTypes.STRING,
   },
   orderId: {
     field: 'order_id',

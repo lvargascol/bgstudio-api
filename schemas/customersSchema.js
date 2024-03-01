@@ -7,7 +7,7 @@ const phone = Joi.string().min(9);
 const userId = Joi.number().integer();
 const email = Joi.string().email();
 const password = Joi.string().min(8);
-const role = Joi.string().valid('customer');
+const role = Joi.string().default('customer');
 
 const createCustomerSchema = Joi.object({
   firstName: firstName.required(),
@@ -15,8 +15,7 @@ const createCustomerSchema = Joi.object({
   phone: phone.required(),
   user: Joi.object({
     email: email.required(),
-    password: password.required(),
-    role: role.required(),
+    password: password,
   }),
 });
 

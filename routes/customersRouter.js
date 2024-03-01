@@ -86,6 +86,7 @@ router.delete(
   passport.authenticate('jwt', { session: false }),
   checkRoles(
     'admin',
+    'manager',
   ),
   validatorHandler(findOneCustomerSchema, 'params'),
   async (req, res, next) => {

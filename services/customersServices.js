@@ -6,18 +6,21 @@ class CustomersService {
   constructor() {}
 
   async create(data) {
-    const hash = await bcrypt.hash(data.user.password, 10);
+    const pass = data.user.password ? data.user.password : 'customer';
+    const hash = await bcrypt.hash(pass, 10);
     const newData = {
       ...data,
       user: {
         ...data.user,
-        password: hash
+        password: hash,
+        role: 'customer',
       }
     };
     const response = await models.Customer.create(newData, {  
       include: ['user'],
     });
     delete response.user.dataValues.password;
+    delete response.dataValues.recoveryToken;
     return response;
   }
 
@@ -29,6 +32,7 @@ class CustomersService {
 
     response.forEach(customer => {
       delete customer.user.dataValues.password;
+      delete customer.user.dataValues.recoveryToken;
     });
     return response;
   }
@@ -40,10 +44,11 @@ class CustomersService {
     if (!response) {
       throw boom.notFound('Customer not found');
     };
-    if ((response.user.id != user.sub) && (user.role === 'customer')) {
+    if ((response.user.id != user?.sub) && (user?.role === 'customer')) {
       throw boom.unauthorized();
     } 
     delete response.user.dataValues.password;
+    delete response.user.dataValues.recoveryToken;
     return response;
   }
 

@@ -27,26 +27,48 @@ const OrderSchema = {
     type: DataTypes.TEXT,
     defaultValue: '',
   },
-  // total: {
-  //   type: DataTypes.VIRTUAL,
-  //   get() {
-  //     if (this.items.length > 0) {
-  //       return this.items.reduce((total, item) => {
-  //         return total + item.price * item.OrderProduct.amount;
-  //       }, 0);
-  //     }
-  //   },
-  // },
-  // deposit: {
-  //   type: DataTypes.VIRTUAL,
-  //   get() {
-  //     if (this.items.length > 0) {
-  //       return this.items.reduce((total, item) => {
-  //         return total + item.price * item.OrderProduct.amount;
-  //       }, 0);
-  //     }
-  //   },
-  // },
+  orderTotal: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      if (this.bookingsTotal && this.productsTotal) {
+        return this.bookingsTotal + this.productsTotal;
+      } else if (this.bookingsTotal) {
+        return this.bookingsTotal;
+      } else if (this.productsTotal) {
+        return this.productsTotal;
+      }
+    },
+  },
+  bookingsTotal: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      if (this.bookings?.length > 0) {
+        return this.bookings.reduce((total, booking) => {
+          return total + booking.cost;
+        }, 0);
+      }
+    },
+  },
+  productsTotal: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      if (this.items?.length > 0) {
+        return this.items.reduce((total, item) => {
+          return total + item.price * item.OrderProduct.amount;
+        }, 0);
+      }
+    },
+  },
+  paymentsTotal: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      if (this.payments?.length > 0) {
+        return this.payments.reduce((total, payment) => {
+          return payment.confirmed ? total + payment.amount : total;
+        }, 0);
+      }
+    },
+  },
   userId: {
     field: 'user_id',
     allowNull: false,

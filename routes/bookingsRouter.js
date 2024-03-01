@@ -67,13 +67,34 @@ router.get(
   async (req, res, next) => {
     try {
       const { date } = req.params;
-      const booking = await service.findByDate(date);
-      res.status(200).json(booking);
+      const bookings = await service.findByDate(date);
+      res.status(200).json(bookings);
     } catch (error) {
       next(error);
     }
   }
 );
+
+router.get(
+  '/date/:date/:id',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles(
+    'admin',
+    'manager',
+    'specialist',
+  ),
+  validatorHandler(findBookingsByDateAndSpecialistSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { date, id } = req.params;
+      const bookings = await service.findByDateAndSpecialist(date, id);
+      res.status(200).json(bookings);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 
 router.get(
   '/sales/:date',
@@ -152,18 +173,18 @@ router.get(
 );
 
 router.get(
-  '/schedule/:date',
+  '/schedule/:date/:id',
   passport.authenticate('jwt', { session: false }),
   checkRoles(
     'admin',
     'manager',
     'specialist',
   ),
-  validatorHandler(findBookingsByDateSchema, 'params'),
+  validatorHandler(findBookingsByDateAndSpecialistSchema, 'params'),
   async (req, res, next) => {
     try {
-      const { date } = req.params;
-      const schedule = await service.scheduleAvailability(date);
+      const { date, id } = req.params;
+      const schedule = await service.scheduleAvailability(date, id);
       res.status(200).json(schedule);
     } catch (error) {
       next(error);

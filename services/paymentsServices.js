@@ -15,7 +15,14 @@ class PaymentsService {
   }
 
   async findOne(id) {
-    const response = await models.Payment.findByPk(id);
+    const response = await models.Payment.findByPk(id, {
+      include: [
+        {
+          association: 'order',
+          include: ['bookings'],
+        },
+      ],
+    });
     if (!response) {
       throw boom.notFound('Payment not found');
     }
@@ -28,6 +35,7 @@ class PaymentsService {
     return {
       message: 'Payment successfully updated',
       id: response.id,
+      orderId: response.orderId,
       ...changes,
     };
   }

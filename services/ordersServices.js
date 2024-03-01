@@ -54,6 +54,8 @@ class OrdersService {
     if (!response) {
       throw boom.notFound('Order not found');
     }
+    delete response.user.dataValues.password;
+    delete response.user.dataValues.recoveryToken;
     return response;
   }
 
@@ -75,6 +77,21 @@ class OrdersService {
       id: id,
     };
   }
+
+  async checkDeposit(orderId) {
+    const order = await this.findOne(orderId);
+    const depositCheck = order.paymentsTotal >= order.bookingsTotal / 2;
+    await order.bookings.forEach((booking) => booking.update({ depositCheck: depositCheck }))
+  }
+
+  
+  async checkTotallyPaid(orderId) {
+    const order = await this.findOne(orderId);
+    const paid = order.paymentsTotal >= order.orderTotal;
+    await order.update({ paid: paid })
+  }
+
+
 }
 
 module.exports = OrdersService;

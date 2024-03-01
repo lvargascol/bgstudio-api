@@ -80,6 +80,33 @@ class BookingsService {
     return booking;
   }
 
+  async findByDateAndSpecialist(date,specialistId) {
+    const startDate = new Date(`${date}T00:00:00.000Z`);
+    const endDate = new Date(`${date}T23:59:59.999Z`);
+    const booking = await models.Booking.findAll({
+      where: {
+        date: {
+          [Op.between]: [startDate, endDate],
+        },
+        specialistId: specialistId,
+      },
+      include: [
+        'order',
+        'customer',
+        'specialist',
+        'services',
+        {
+          association: 'promos',
+          include: ['services'],
+        },
+      ],
+    });
+    if (!booking) {
+      throw boom.notFound('Booking not found');
+    }
+    return booking;
+  }
+
   async findSalesByDate(date) {
     const startDate = new Date(`${date}T00:00:00.000Z`);
     const endDate = new Date(`${date}T23:59:59.999Z`);
@@ -267,13 +294,13 @@ class BookingsService {
     );
   }
 
-  async scheduleAvailability(date) {
+  async scheduleAvailability(date, id) {
     const hoursArray = this.generateHoursArray(date, 15);
-    const bookings = await this.findByDate(moment(date).format('YYYY-MM-DD'));
+    const bookings = await this.findByDateAndSpecialist(moment(date).format('YYYY-MM-DD'), id);
     bookings.forEach((booking) => {
       let r = 0;
       hoursArray.forEach((block) => {
-        if (moment(booking.date).format('HH:mm') === block.time) {    
+        if (moment(booking.date).format('HH:mm') === block.time) {
           if (booking.minutes < block.min) {
             block.min = block.min - booking.minutes;
           } else {
@@ -356,6 +383,12 @@ class BookingsService {
       })
     })
     return bookings;
+  }
+
+  async checkDeposit(bookingId, paymentsTotal, bookingsTotal ) {
+    const booking = await this.findOne(bookingId);
+    const depositCheck = paymentsTotal >= bookingsTotal * 2;
+    await booking.update({depositCheck:depositCheck});    
   }
   
 }
