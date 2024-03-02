@@ -5,7 +5,7 @@ const { setupModels } = require('../db/models/index');
 const options = {
   dialect: 'postgres',   //ALternate if you want to use other DB
   // dialect: 'mysql',
-  logging: config.isProd ? false : console.log,
+  logging: config.isProd ? false : console.log(config.isProd),
 };
 
 if (config.isProd) {

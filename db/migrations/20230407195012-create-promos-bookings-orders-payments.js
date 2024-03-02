@@ -1,9 +1,51 @@
 'use strict';
 
+const { DataTypes, Sequelize } = require('sequelize');
+
+
 const { BookingSchema, BOOKING_TABLE } = require('./../models/bookingModel');
-const { OrderSchema, ORDER_TABLE } = require('./../models/orderModel');
+const { ORDER_TABLE } = require('./../models/orderModel');
 const { PaymentSchema, PAYMENT_TABLE } = require('./../models/paymentModel');
 const { PromoSchema, PROMO_TABLE } = require('./../models/promoModel');
+
+const { USER_TABLE } = require('./../models/userModel');
+
+
+const OrderSchema = {
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.INTEGER,
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'created_at',
+    defaultValue: Sequelize.NOW,
+  },
+  paid: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  notes: {
+    allowNull: false,
+    type: DataTypes.TEXT,
+    defaultValue: '',
+  },
+  userId: {
+    field: 'user_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    reference: {
+      model: USER_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
+};
+
 
 const {
   BookingPromoSchema,
