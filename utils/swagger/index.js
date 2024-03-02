@@ -13,7 +13,7 @@ const options = {
     servers: [
       {
         url: "https://bgstudio-api-production.up.railway.app"
-      }
+      },
     ],
   },
   components: {
