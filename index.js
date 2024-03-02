@@ -15,7 +15,7 @@ const app = express();
 const port = process.env.PORT || 3005;
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 
 swaggerDocs(app, port);
 
@@ -26,19 +26,19 @@ routersApi(app);
 
 app.listen(port, () => {});
 
-// //Whitelist contiene los dominios habilitados para acceder a nuesta API
+//Whitelist contiene los dominios habilitados para acceder a nuesta API
 
-// const whitelist = ['http://127.0.0.1:5500','http://localhost:5500','https://myapp.ldvc'];
-// const options = {
-//   origin: (origin, callback) => {
-//     if (whitelist.includes(origin) || !origin) {
-//       callback(null,true);
-//     } else {
-//       callback(new Error('No permitido'));
-//     }
-//   }
-// }
-// app.use(cors(options));
+const whitelist = ['http://127.0.0.1:5500','http://localhost:5500','https://bgstudio-back-office-ca5w-7fwkfr9hd-lvargascol.vercel.app'];
+const options = {
+  origin: (origin, callback) => {
+    if (whitelist.includes(origin) || !origin) {
+      callback(null,true);
+    } else {
+      callback(new Error('No permitido'));
+    }
+  }
+}
+app.use(cors(options));
 
 app.use(logErrors);
 app.use(validationErrorHandler);
