@@ -28,17 +28,17 @@ app.listen(port, () => {});
 
 //Whitelist contiene los dominios habilitados para acceder a nuesta API
 
-const whitelist = ['http://127.0.0.1:5500','http://localhost:5500','https://bgstudio-back-office-ca5w.vercel.app'];
-const options = {
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin) || !origin) {
-      callback(null,true);
-    } else {
-      callback(new Error('No permitido'));
-    }
-  }
-}
-app.use(cors(options));
+// const whitelist = ['http://127.0.0.1:5500','http://localhost:5500','https://bgstudio-back-office-ca5w.vercel.app'];
+// const options = {
+//   origin: (origin, callback) => {
+//     if (whitelist.includes(origin) || !origin) {
+//       callback(null,true);
+//     } else {
+//       callback(new Error('No permitido'));
+//     }
+//   }
+// }
+// app.use(cors(options));
 
 app.use(logErrors);
 app.use(validationErrorHandler);
