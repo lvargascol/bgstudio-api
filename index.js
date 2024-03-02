@@ -24,7 +24,7 @@ require('./utils/auth');
 
 routersApi(app);
 
-app.listen(port, () => {});
+// app.listen(port, () => {});
 
 //Whitelist contiene los dominios habilitados para acceder a nuesta API
 
