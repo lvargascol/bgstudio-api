@@ -17,6 +17,13 @@ const port = process.env.PORT || 3005;
 app.use(express.json());
 app.use(cors());
 
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://bgstudio-back-office-ca5w.vercel.app/"
+  );
+});
+
 swaggerDocs(app, port);
 
 
