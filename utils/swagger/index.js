@@ -12,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://bgstudio-api-production.up.railway.app"
+        url: "https://bgstudio-api.onrender.com"
       },
     ],
   },
