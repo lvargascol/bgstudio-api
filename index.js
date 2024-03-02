@@ -12,7 +12,7 @@ const {
 
 
 const app = express();
-const port = process.env.PORT || 3005;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 // app.use(cors());
@@ -28,7 +28,7 @@ app.listen(port, () => {});
 
 //Whitelist contiene los dominios habilitados para acceder a nuesta API
 
-const whitelist = ['http://127.0.0.1:5500','http://localhost:5500','https://bgstudio-back-office-ca5w-7fwkfr9hd-lvargascol.vercel.app'];
+const whitelist = ['http://127.0.0.1:5500','http://localhost:5500','https://bgstudio-back-office-ca5w.vercel.app'];
 const options = {
   origin: (origin, callback) => {
     if (whitelist.includes(origin) || !origin) {
